@@ -1,0 +1,15 @@
+{
+  "category": "Coding",
+  "title": "Cleanup",
+  "description": "Clean up the code to improve its readability and maintainability.",
+  "message": "I have the following {{language}} code:\n\n```{{ft}}\n{{selection}}\n```\n\nClean up the code to improve its readability and maintainability. This may include removing unnecessary code, renaming variables, or reorganizing code segments for simplification purposes.\n{{language_instructions}}\n\nIMPORTANT: Only return the code inside of a code fence and nothing else. Do not explain your changes.",
+  "insertionArgs": [
+    {
+      "method": "replace selection",
+      "typedArgs": {
+        "selectionBehavior": "Use Original Selection"
+      },
+      "targetBlock": 1
+    }
+  ]
+}

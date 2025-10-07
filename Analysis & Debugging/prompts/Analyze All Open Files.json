@@ -1,0 +1,7 @@
+{
+  "category": "Analysis & Debugging",
+  "title": "Analyze All Open Files",
+  "description": "Examine code to identify and locate bugs and other issues.",
+  "message": "I have the following code:\n\n{{allFiles}}\n\nAnalyze the code for bugs, violation of best practices, unsafe code, and areas for improvement. List each issue you identify as a list item. If you have a solution for a bug, include it as a code block underneath the bug's list item. If you have a more general suggestion instead, provide that as a sub-item.\nGive special consideration to the following specific user input:{{input:Provide specific requests or info here, or leave blank for general analysis.}}",
+  "insertionArgs": []
+}

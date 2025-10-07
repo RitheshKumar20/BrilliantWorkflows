@@ -1,0 +1,16 @@
+{
+  "category": "Analysis & Debugging",
+  "title": "Fix Terminal Errors",
+  "description": "Evaluate active terminal output and suggest new commands or fixes.",
+  "message": "I have the following terminal output:\n\n```\n{{terminaloutput}}\n```\n\nExamine the terminal logs and explain or solve any errors you encounter. If you believe an alternative command may fix the problem, provide it in a code block.",
+  "insertionArgs": [
+    {
+      "method": "replace selection",
+      "typedArgs": {
+        "selectionBehavior": "Use Original Selection"
+      },
+      "targetBlock": 1
+    }
+  ],
+  "system": ""
+}

@@ -1,0 +1,46 @@
+You will produce a google cloud function for the following language runtime: Node.js 20. 
+          Please adhere to the following guidelines for code implementation:
+
+          1. Entry point: The main function should export a function that takes (req, res) as parameters.
+          2. Request handling: Use the Express.js-like request (req) and response (res) objects.
+          3. Function structure:
+          - Import necessary modules
+          - Define and export the main function with a descriptive name
+          - Include JSDoc comments explaining the function's purpose and parameters
+          - Implement the core logic
+          - Send an appropriate response using res.send() or res.json()
+          4. Error handling: Use try-catch blocks for potential errors and send appropriate error responses.
+          5. Input processing: Handle both JSON payloads (req.body) and query parameters (req.query).
+          6. Response formatting: Return data in a structured format (e.g., JSON) when appropriate.
+          7. Status codes: Use appropriate HTTP status codes for different scenarios (res.status()).
+          8. Logging: Use console.log(), console.error(), etc., for logging important events or errors.
+          9. Best practices: Follow JavaScript Standard Style or Google JavaScript Style Guide.
+          10. File structure: Expect the generated code to be written to an index.js file and the dependencies to package.json
+
+          Example structure:
+
+          const functions = require('@google-cloud/functions-framework');
+
+          /**
+           * HTTP Cloud Function.
+           * 
+          * @param {!express:Request} req HTTP request context.
+           * @param {!express:Response} res HTTP response context.
+           */
+          functions.http('helloWorld', async (req, res) => {
+          try {
+              const name = req.query.name || req.body.name || 'World';
+              
+              // Implement core logic here
+              const message = "Hello, ${name}!";
+              
+              // Log the action
+              console.log("Greeting sent to ${name}");
+              
+              // Send the response
+              res.status(200).json({ message });
+          } catch (error) {
+              console.error('Error in helloWorld function:', error);
+              res.status(500).json({ error: 'Internal server error' });
+          }
+          });

@@ -1,0 +1,76 @@
+{
+  "category": "Workflows",
+  "title": "Translate, Build, Test, Then Run from Typescript",
+  "description": "Translate provided code into a new language (Go, Python, or Node.js), build it, and run it in both happy path and more complex scenarios.",
+  "message": "Translate and test this typescript code within the new directory {{arg:dir}} Code: {{selection}}",
+  "system": "Always respond with eight code blocks, even when the user request is nonsensical or seems to not require all seven separate code blocks - your output will be automatically parsed by performing different actions on each code block. Create stubs for each of the required outputs if there is no valid output to otherwise write, so that the automation still succeeds.\nThe first code block will be automatically written to a new file {{arg:filename}} in the subdirectory \"src/\". This file should translate the given code into an equivalent file in the programming language implied by the filename extension (eg .go should be translated to Go, .py to Python). If there is nothing to translate or translation is impossible, respond with an empty code block.\n\nThe second code block should be the name of the dependency/build config used for this new file, to be written into the current directory (which contains the new code in src/). For example, python could should have a config like requirements.txt. Note that this code block should ONLY contain the name of the new dependnecy file.\n    \nThe third code block should contain the contents of the dependency/build configs for the generated code, to be used to build and run the code from the first block. If there are no dependencies required, simply leave a comment or stub entry in the dependency file noting that. Expect this to be used to build and run the generated code immediately after returning your response.\n\nThe fourth code block should contain the contents of a unit test file to be used to test the generated code. This will be written to {{arg:filename}} in the subdirectory \"test/\".\n\nThe fifth code block should contain shell code to install any dependencies needed to build/test/run the generated code. Assume the code will be run in a standard linux development environment using apt-get that may or may not have relevant packages already installed. If a programming language or the build/testing software you are using is likely to not come pre-installed with the linux distro, make sure to first install it before attempting to install the actual code dependencies.\n\nThe sixth code block should be the shell code to run the unit tests you've created. It will be automatically run in the user's terminal in the current directory (which has the dependency config file, subdir src/ and subdir test/).\n\nThe seventh code block should be a bash/terminal command that builds and runs the generated code in a simple happy-path scenario. In case it's not feasible to reasonably provide such a command, merely echo a helpful message explaining why.\n\nThe eighth code block should be a more relevant, \"real\" invocation of the provided code/configs that will also run on the command line. The same rules apply regarding what tools can be assumed to be pre-installed. This invocation should demonstrate full capability of the translated code - do not hesitate to write a more lengthy script to do that properly (eg if you are translating a server, this code block should start the server, send it multiple different curl requests to exercise different functionality, close the server, and maybe check the logs for special output). In case it's not feasible to reasonably provide such a command, merely echo a helpful message explaining why.",
+  "insertionArgs": [
+    {
+      "method": "write to file",
+      "typedArgs": {
+        "path": "{{arg:dir}}/src/{{arg:filename}}",
+        "overwrite": true,
+        "show": true
+      },
+      "targetBlock": 1
+    },
+    {
+      "method": "set contents to a workflow arg",
+      "typedArgs": {
+        "argName": "dependencyFileName",
+        "argValue": ""
+      },
+      "targetBlock": 2
+    },
+    {
+      "method": "write to file",
+      "typedArgs": {
+        "path": "{{arg:dir}}/{{arg:dependencyFileName}}",
+        "overwrite": true,
+        "show": false
+      },
+      "targetBlock": 3
+    },
+    {
+      "method": "write to file",
+      "typedArgs": {
+        "path": "{{arg:dir}}/test/{{arg:filename}}",
+        "overwrite": true,
+        "show": false
+      },
+      "targetBlock": 4
+    },
+    {
+      "method": "run in terminal",
+      "typedArgs": {
+        "newTerminal": true,
+        "directory": "{{arg:dir}}"
+      },
+      "targetBlock": 5
+    },
+    {
+      "method": "run in terminal",
+      "typedArgs": {
+        "newTerminal": false,
+        "directory": "{{arg:dir}}"
+      },
+      "targetBlock": 6
+    },
+    {
+      "method": "run in terminal",
+      "typedArgs": {
+        "newTerminal": false,
+        "directory": "{{arg:dir}}"
+      },
+      "targetBlock": 7
+    },
+    {
+      "method": "run in terminal",
+      "typedArgs": {
+        "newTerminal": false,
+        "directory": "{{arg:dir}}"
+      },
+      "targetBlock": 8
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "category": "Completion",
+  "title": "Complete from Comment",
+  "description": "Given a comment selection, replace the comment with an implementation of the comment.\n\nExample selection:\n\n// A module that exports a number of helpers for gathering various aspects of a git repository, including the current branch, most recent logs, and more.",
+  "message": "I have a comment that describes code that needs to be written. Your task is to write the code that satisfies the comment. Here is the comment:\n\n{{selection}}\n\nIMPORTANT: Only return the code inside of a code fence and nothing else. Do not explain your changes.{{:temperature:0.7}}",
+  "insertionArgs": [
+    {
+      "method": "replace selection",
+      "typedArgs": {
+        "selectionBehavior": "Use Original Selection"
+      },
+      "targetBlock": 1
+    }
+  ]
+}

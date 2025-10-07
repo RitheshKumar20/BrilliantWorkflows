@@ -1,0 +1,7 @@
+{
+  "category": "Miscellaneous",
+  "title": "General Chat (no context)",
+  "description": "Just chat with the model. Rubber duck an idea. Ask a question. Unpack your obsession with tattoos and how it relates to your childhood. Whatever.",
+  "message": "{{input:What do you want to say?}}",
+  "insertionArgs": []
+}

@@ -1,0 +1,43 @@
+{
+  "category": "Cloud Operations",
+  "title": "Create Google Cloud Function",
+  "description": "Create the code and dependency config for a new GCF service, as well as the deployment command and an example invocation command.",
+  "message": "Satisfy the following requirements: {{input: Specify function's requirements}}.\n\nOutput files will be written to the sub directory code/ within current directory {{arg:dir}}\nThe specific files written will be {{gcf{{arg:runtime}}Codefile}} and {{gcf{{arg:runtime}}Deps}}, in that order.",
+  "system": "{{gcfsys}}{{gcf{{arg:runtime}}Prompt}}",
+  "insertionArgs": [
+    {
+      "method": "write to file",
+      "typedArgs": {
+        "path": "{{arg:dir}}/code/{{gcf{{arg:runtime}}Codefile}}",
+        "overwrite": true,
+        "show": true
+      },
+      "targetBlock": 1
+    },
+    {
+      "method": "write to file",
+      "typedArgs": {
+        "path": "{{arg:dir}}/code/{{gcf{{arg:runtime}}Deps}}",
+        "overwrite": true,
+        "show": false
+      },
+      "targetBlock": 2
+    },
+    {
+      "method": "run in terminal",
+      "typedArgs": {
+        "newTerminal": true,
+        "directory": "{{arg:dir}}"
+      },
+      "targetBlock": 3
+    },
+    {
+      "method": "run in terminal",
+      "typedArgs": {
+        "newTerminal": false,
+        "directory": "{{arg:dir}}"
+      },
+      "targetBlock": 4
+    }
+  ]
+}

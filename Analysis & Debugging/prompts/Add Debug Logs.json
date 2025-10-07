@@ -1,0 +1,15 @@
+{
+  "category": "Analysis & Debugging",
+  "title": "Add Debug Logs",
+  "description": "Log all variables in the selected code.",
+  "message": "I have the following {{language}} code:\n\n```{{ft}}\n{{selection}}\n```\n\nAdd debug statements throughout the code, logging all variables that are used in the selected text.\n\nIMPORTANT: Only return the code inside of a code fence and nothing else. Do not explain your changes.",
+  "insertionArgs": [
+    {
+      "method": "replace selection",
+      "typedArgs": {
+        "selectionBehavior": "Use Original Selection"
+      },
+      "targetBlock": 1
+    }
+  ]
+}

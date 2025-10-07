@@ -1,0 +1,15 @@
+{
+  "category": "Analysis & Debugging",
+  "title": "Fix Code with Terminal Errors",
+  "description": "Evaluate active terminal output and provided code. Attempt to modify the code to fix any identified errors.",
+  "message": "I have the following terminal output:\n\n```\n{{terminaloutput}}\n```\n\nExamine the terminal logs and explain or solve any errors you encounter relevant to this code: I have the following {{language}} code:\n\n```{{ft}}\n{{selection}}\n```\n\n. If you identify a bug and know its solution, provide the fixed code in a code block to be used to replace the provided code. If the fix requires running more or different terminal commands, or modifying mroe than one piece of code, make sure that any code blocsk for those are after the first - if the provided code block is not actually problematic, return a first code block that is exactly the provided code, since it will be automatically parsed and replaced in the user's IDE.",
+  "insertionArgs": [
+    {
+      "method": "replace selection",
+      "typedArgs": {
+        "selectionBehavior": "Use Original Selection"
+      },
+      "targetBlock": 1
+    }
+  ]
+}

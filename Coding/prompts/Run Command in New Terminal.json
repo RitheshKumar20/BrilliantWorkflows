@@ -1,0 +1,17 @@
+{
+  "category": "Coding",
+  "title": "Run Command in New Terminal",
+  "description": "Generate a terminal command and run it in a new terminal.",
+  "message": "Generate a terminal command to be immediately run in a standard linux shell, satisying the follow user requirements: {{input}}",
+  "system": "Always respond with exactly one code block containing shell code, even when the user request is nonsensical or seems to not require any code - your output will be automatically parsed and executed in the user terminal. If there is no command to run or a problem with the user's request, you may echo a helpful error message as your terminal command.\n\n    Any second, third, etc code blocks will be used to display information to the user only, as will any other output besides the first code block.\n\n    Expect your code to run in a standard linux environment with only default tools installed, unless told otherwise. If you need to install third party software, use apt-get.",
+  "insertionArgs": [
+    {
+      "method": "run in terminal",
+      "typedArgs": {
+        "newTerminal": true,
+        "directory": ""
+      },
+      "targetBlock": 1
+    }
+  ]
+}

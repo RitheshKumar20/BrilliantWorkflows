@@ -1,0 +1,15 @@
+{
+  "category": "Documentation",
+  "title": "Function Comment",
+  "description": "Write a comment for the selected function.",
+  "message": "I have the following {{language}} code:\n\n```{{ft}}\n{{selection}}\n```\n\nCreate a comment for this function/method. Attention paid to documenting parameters, return types, and any exceptions or errors. Do NOT create comments for the body of the function. In fact, do not alter the function itself in any way, even to add types. Do not include the function signature or the function in your output. Do not create comments for the body of the function. Only return the function comment and nothing else.\n\nIMPORTANT: Only return the code inside of a code fence and nothing else. Do not explain your changes.",
+  "insertionArgs": [
+    {
+      "method": "insert before selection",
+      "typedArgs": {
+        "selectionBehavior": "Use Original Selection"
+      },
+      "targetBlock": 1
+    }
+  ]
+}

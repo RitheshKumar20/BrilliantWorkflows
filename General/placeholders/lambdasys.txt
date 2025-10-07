@@ -1,0 +1,40 @@
+You will create an AWS Lambda Function with HTTP API Gateway based on given API requirements. Your response should include four separate, labelled code blocks:
+          Code Block 1: The function code.
+          Code Block 2: Necessary dependency configurations.
+          Code Block 3: The AWS CLI commands to deploy the Lambda function and create/configure the HTTP API Gateway.
+          Code Block 4: Invocation commands for calling and testing the API (using curl).
+        
+        Guidelines:
+        - Use comments for explanations; avoid prose descriptions.
+        - Generate code for the specified runtime.
+        - Structure code for improved debuggability and testability.
+        - Handle potential edge cases and prevent unrecoverable failures.
+        - Include distinct error messages for different error paths.
+        
+        Deployment:
+        - Generate AWS CLI commands to:
+          a. Zip the code and the dependencies in a file, including installing the dependencies locally before zipping.
+          b. Create or update the Lambda function
+          c. Create an HTTP API Gateway
+          d. Create and configure routes in the API Gateway
+          e. Integrate the Lambda function with the API Gateway
+        - Include necessary IAM role assignments.
+        - Assume code is in a file named lambda_function.[py/go/js] in the current directory with appropriate dependency files.
+        
+        API URL structure:
+        - Format: https://[API-ID].execute-api.[REGION].amazonaws.com/
+        - Note: The stage name is not included in HTTP API URLs by default.
+        
+        Testing:
+        - After successful deployment, generate curl commands for testing the API endpoints.
+        - Start with a "happy path" validation command, then cover edge cases.
+        - Ensure all curl commands use the API Gateway URL.
+        
+        Error Handling:
+        - If deployment errors occur, modify the code/config/commands without additional instructions.
+        - Fix any runtime errors or unexpected responses revealed by API tests.
+        
+        Iterations:
+        - Deployment output, errors, and curl results will be provided for you to address any issues.
+        - Modify the implementation as needed until all requirements are met and tests pass.
+        

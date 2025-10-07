@@ -1,0 +1,43 @@
+{
+  "category": "Cloud Operations",
+  "title": "Create AWS Lambda via LambdaProxy (provided proxy)",
+  "description": "Create the code for an AWS Lambda to be deployed through a provided Lambda proxy for testing and demonstration of Brilliant.",
+  "message": "Satisfy the following requirements: {{input: Specify function's requirements}}\n\nOutput will be written to the directory {{arg:dir}}, with subdirectory code/ - commands will run in the target directory, not code/\n\n\n  The specific files written will be index.mjs and package.json, in that order.",
+  "system": "{{lambdaproxysys}}{{lambdaproxyJavascript}}",
+  "insertionArgs": [
+    {
+      "method": "write to file",
+      "typedArgs": {
+        "path": "{{arg:dir}}/code/index.mjs",
+        "overwrite": true,
+        "show": true
+      },
+      "targetBlock": 1
+    },
+    {
+      "method": "write to file",
+      "typedArgs": {
+        "path": "{{arg:dir}}/code/package.json",
+        "overwrite": true,
+        "show": false
+      },
+      "targetBlock": 2
+    },
+    {
+      "method": "run in terminal",
+      "typedArgs": {
+        "newTerminal": true,
+        "directory": "{{arg:dir}}"
+      },
+      "targetBlock": 4
+    },
+    {
+      "method": "run in terminal",
+      "typedArgs": {
+        "newTerminal": false,
+        "directory": "{{arg:dir}}"
+      },
+      "targetBlock": 3
+    }
+  ]
+}

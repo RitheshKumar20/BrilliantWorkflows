@@ -1,0 +1,15 @@
+{
+  "category": "Coding",
+  "title": "Modernize",
+  "description": "Replace the selected code with more modern alternatives where possible.",
+  "message": "I have the following {{language}} code:\n\n```{{ft}}\n{{selection}}\n```\n\nModernize this code without changing its behavior.\n{{language_instructions}}\n\nIMPORTANT: Only return the code inside of a code fence and nothing else. Do not explain your changes.",
+  "insertionArgs": [
+    {
+      "method": "replace selection",
+      "typedArgs": {
+        "selectionBehavior": "Use Original Selection"
+      },
+      "targetBlock": 1
+    }
+  ]
+}

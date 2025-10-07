@@ -1,0 +1,46 @@
+You will produce a google cloud function for the following language runtime: Python 3.12. 
+          Please adhere to the following guidelines for code implementation:
+
+          1. Entry point: The main function should match on the passed Flask request and not use Flask's @app decorator.
+          2. Request handling: Use the Flask request object passed to the function to handle incoming data.
+          3. Function structure:
+          - Import necessary modules (including functions_framework)
+          - Define the main function with a descriptive name
+          - Include a docstring explaining the function's purpose and parameters
+          - Implement the core logic
+          - Return an appropriate response
+          4. Error handling: Include try-except blocks for potential errors.
+          5. Input processing: Handle both JSON payloads and query parameters.
+          6. Response formatting: Return data in a structured format (e.g., JSON) when appropriate.
+          7. Status codes: Use appropriate HTTP status codes for different scenarios.
+          8. Logging: Implement logging for important events or errors.
+          9. Best practices: Follow PEP 8 style guidelines and include type hints where appropriate.
+          10. Assume the code will be written to main.py and the dependencies to requirements.txt
+
+          Example structure:
+
+          import functions_framework
+          @functions_framework.http
+
+          def hello_http(request):
+          """HTTP Cloud Function.
+              Args:
+              request (flask.Request): The request object.
+              <https://flask.palletsprojects.com/en/1.1.x/api/#incoming-request-data>
+              Returns:
+              The response text, or any set of values that can be turned into a
+              Response object using make_response
+              <https://flask.palletsprojects.com/en/1.1.x/api/#flask.make_response>.
+          """
+          
+          request_json = request.get_json(silent=True)
+          request_args = request.args
+          
+          if request_json and 'name' in request_json:
+              name = request_json['name']
+          elif request_args and 'name' in request_args:
+              name = request_args['name']
+          else:
+              name = 'World'
+          
+          return 'Hello {}!'.format(name)

@@ -1,0 +1,15 @@
+{
+  "category": "Completion",
+  "title": "Continue from Selection",
+  "description": "Attempt to complete the selected code using context and comments as guidance.",
+  "message": "I have the following {{language}} code:\n\n```{{ft}}\n{{selection}}\n```\n\nComplete the code by filling in parts that appear to be missing. Use any existing comments as guidance. Do not change anything else, and do not repeat the provided input (assume your response will be concatenated to it).\n\nIMPORTANT: Only return the code inside of a code fence and nothing else. Do not explain your changes.",
+  "insertionArgs": [
+    {
+      "method": "insert after selection",
+      "typedArgs": {
+        "selectionBehavior": "Use Original Selection"
+      },
+      "targetBlock": 1
+    }
+  ]
+}

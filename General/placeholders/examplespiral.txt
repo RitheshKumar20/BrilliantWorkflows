@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinite Spiral Particle Zoom</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #000;
+            font-family: 'Inter', sans-serif;
+        }
+        canvas {
+            display: block;
+        }
+        #info {
+            position: absolute;
+            top: 10px;
+            width: 100%;
+            text-align: center;
+            color: white;
+            z-index: 100;
+            display:block;
+            font-size: 0.8rem;
+            opacity: 0.6;
+        }
+    </style>
+</head>
+<body>
+    <!-- The core of the animation will be rendered in this canvas -->
+    <canvas id="scene-canvas"></canvas>
+
+    <!-- Import the three.js library for 3D graphics -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <script>
+        // === SCENE SETUP ===
+        let scene, camera, renderer;
+        let particleGroup; // A group to hold both particle systems for easier manipulation
+
+        // === ANIMATION PARAMETERS ===
+        const PARTICLE_COUNT = 80000; // Total number of particles for each helix strand
+        const ZINCREMENT = 0.05;
+        // FIX: Calculated the actual length of the spiral based on the generation logic.
+        // The original value was too small and inconsistent with the generated geometry.
+        const SPIRAL_DEPTH = (PARTICLE_COUNT * ZINCREMENT) * ZINCREMENT; // This evaluates to 1600
+        const ZOOM_SPEED = 0.05; // How fast the scene moves towards the camera
+        const ROTATION_SPEED = 0.001; // How fast the spiral rotates
+
+        /**
+         * Initializes the entire 3D scene, including camera, renderer, and particles.
+         */
+        function init() {
+            // --- Scene and Renderer ---
+            scene = new THREE.Scene();
+            renderer = new THREE.WebGLRenderer({
+                canvas: document.getElementById('scene-canvas'),
+                antialias: true
+            });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            document.body.appendChild(renderer.domElement);
+
+            // --- Camera ---
+            const fov = 75;
+            const aspect = window.innerWidth / window.innerHeight;
+            const near = 0.1;
+            const far = 4000; // Increased far plane to see the reset spiral better
+            camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+            camera.position.z = 5; // Start camera slightly back
+
+            // --- Particle Creation ---
+            particleGroup = new THREE.Group();
+            
+            // Create two particle systems, one for each strand of the double helix
+            const particles1 = createParticleSystem(0x42a5f5); // A nice blue color
+            const particles2 = createParticleSystem(0xff7043); // A warm orange color
+
+            particleGroup.add(particles1);
+            particleGroup.add(particles2);
+            
+            scene.add(particleGroup);
+
+            // --- Event Listeners ---
+            window.addEventListener('resize', onWindowResize, false);
+        }
+
+        /**
+         * Creates a system of particles forming one strand of the double-helix spiral.
+         * @param {number} color - The hexadecimal color for the particles.
+         * @returns {THREE.Points} A three.js Points object representing the particle system.
+         */
+        function createParticleSystem(color) {
+            const geometry = new THREE.BufferGeometry();
+            const positions = new Float32Array(PARTICLE_COUNT * 3);
+
+            const helixRadius = 4; // Radius of the double helix around the spiral arm
+
+            for (let i = 0; i < PARTICLE_COUNT; i++) {
+                // The main parameter 't' determines the position along the spiral
+                const t = i * ZINCREMENT;
+
+                // --- Main Spiral Arm Calculation (Logarithmic Spiral) ---
+                // This creates the primary shape that spirals outwards and moves down the z-axis.
+                const mainAngle = 0.06 * t;
+                const mainRadius = 4 * Math.exp(-t * 0.001);
+
+                const armX = mainRadius * Math.cos(mainAngle);
+                const armY = mainRadius * Math.sin(mainAngle);
+                const armZ = -t * 0.05;
+
+                // --- Double Helix Offset Calculation ---
+                // This creates the smaller helix that twists around the main spiral arm.
+                const helixAngle = t * 2;
+
+                // We need a vector perpendicular to the spiral arm in the XY plane to apply the offset.
+                // The direction from origin to arm is (cos(mainAngle), sin(mainAngle)).
+                // A perpendicular vector is (-sin(mainAngle), cos(mainAngle)).
+                const perpX = -Math.sin(mainAngle);
+                const perpY = Math.cos(mainAngle);
+
+                // We combine the perpendicular vector with an oscillation on the Z-axis
+                // to create the 3D twisting motion of the helix.
+                const offsetX = helixRadius * Math.cos(helixAngle) * perpX;
+                const offsetY = helixRadius * Math.cos(helixAngle) * perpY;
+                const offsetZ = helixRadius * Math.sin(helixAngle);
+
+                // --- Final Particle Position ---
+                // We add the helix offset to the main arm position.
+                // For the second particle system, the offset will be subtracted implicitly
+                // by the animation logic, creating the other side of the helix.
+                const index = i * 3;
+                if (color === 0x42a5f5) { // Blue particle strand
+                    positions[index] = armX + offsetX;
+                    positions[index + 1] = armY + offsetY;
+                    positions[index + 2] = armZ + offsetZ;
+                } else { // Orange particle strand (opposite side)
+                    positions[index] = armX - offsetX;
+                    positions[index + 1] = armY - offsetY;
+                    positions[index + 2] = armZ - offsetZ;
+                }
+            }
+
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+            // --- Particle Material ---
+            // Additive blending creates a beautiful glowing effect where particles overlap.
+            const material = new THREE.PointsMaterial({
+                color: color,
+                size: 0.05,
+                blending: THREE.AdditiveBlending,
+                transparent: true,
+                depthWrite: false, // Important for correct blending
+            });
+
+            return new THREE.Points(geometry, material);
+        }
+
+        /**
+         * Handles window resize events to keep the scene proportional.
+         */
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        /**
+         * The main animation loop, called on every frame.
+         */
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // --- Update Animations ---
+            // Move the entire group towards the camera to create the zoom effect.
+            particleGroup.position.z += ZOOM_SPEED;
+
+            // Rotate the group for the spinning effect.
+            particleGroup.rotation.z -= ROTATION_SPEED;
+
+            // --- Infinite Loop Logic (FIXED) ---
+            // The original condition `> camera.position.z` was incorrect and caused an immediate reset.
+            // This new condition waits for the entire spiral to move past the camera before resetting.
+            // This allows the user to experience the full journey through the particle tunnel.
+            if (particleGroup.position.z > SPIRAL_DEPTH) {
+                // Reset the spiral's position far back so it appears to be a new one
+                // starting its journey from the distance.
+                particleGroup.position.z = -SPIRAL_DEPTH;
+            }
+
+            renderer.render(scene, camera);
+        }
+
+        // --- Start the application ---
+        init();
+        animate();
+    </script>
+</body>
+</html>

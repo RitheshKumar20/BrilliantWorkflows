@@ -1,0 +1,18 @@
+{
+  "category": "Coding",
+  "title": "Make Notes, Then Comment",
+  "description": "Use Chain-of-Thought to take notes about the code first, then call the commenting prompt.",
+  "message": "Take notes about the provided code, analayzing its intended uses now and in the future. Guess at the strategy and design behind it (there may be much more context that is not included). After brainstorming for a bit, provide a code block summarizing your findings. Code: {{selection}}",
+  "system": "Always respond with exactly single one code block containing notes, even when the user request is nonsensical or empty.",
+  "insertionArgs": [
+    {
+      "method": "use in new prompt",
+      "typedArgs": {
+        "promptTitle": "Inline comments",
+        "selectionOverride": "Use Original Selection",
+        "newConversation": false
+      },
+      "targetBlock": 1
+    }
+  ]
+}

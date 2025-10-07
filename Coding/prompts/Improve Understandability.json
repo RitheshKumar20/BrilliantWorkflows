@@ -1,0 +1,15 @@
+{
+  "category": "Coding",
+  "title": "Improve Understandability",
+  "description": "Improve the clarity and readability of the code.",
+  "message": "I have the following {{language}} code:\n\n```{{ft}}\n{{selection}}\n```\n\nImprove the clarity and readability of the code so that it can be easily understood by a human, without changing its semantics. For example, if a single statement is particularly difficult to understand, break it into multiple lines with comments to help explain the hardest parts. If a variable name is too generic, cryptic, or likely to be misundersood, replace it with something more appropriate. Add comments to explain why a particular decision or approach was made when it could be non-obvious. Format whitespace, nesting, etc. to be consistent and in line with general best practices.\n{{language_instructions}}\n\nIMPORTANT: Only return the code inside of a code fence and nothing else. Do not explain your changes.",
+  "insertionArgs": [
+    {
+      "method": "replace selection",
+      "typedArgs": {
+        "selectionBehavior": "Use Original Selection"
+      },
+      "targetBlock": 1
+    }
+  ]
+}

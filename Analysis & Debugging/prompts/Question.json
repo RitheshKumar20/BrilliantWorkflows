@@ -1,0 +1,7 @@
+{
+  "category": "Analysis & Debugging",
+  "title": "Question",
+  "description": "Ask a question about the selected code.",
+  "message": "I have the following {{language}} code:\n\n```{{ft}}\n{{selection}}\n```\n\nI have a question about this code: {{input:What is your question?}}",
+  "insertionArgs": []
+}

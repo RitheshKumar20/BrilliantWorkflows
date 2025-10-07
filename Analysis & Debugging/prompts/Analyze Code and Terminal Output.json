@@ -1,0 +1,7 @@
+{
+  "category": "Analysis & Debugging",
+  "title": "Analyze Code and Terminal Output",
+  "description": "Examine code and terminal output to identify bugs and other issues.",
+  "message": "I have the following {{language}} code:\n\n```{{ft}}\n{{selection}}\n```\n\nAnalyze the code in the context of the following terminal output: I have the following terminal output:\n\n```\n{{terminaloutput}}\n```\n\n. Specifically attempt to address the following user question if provided:{{input:What do you want to talk about?}}}}\n\n If no user question was provided, attempt to identify errors or interesting output and suggest explanations or alternatives as appropriate to the context.",
+  "insertionArgs": []
+}

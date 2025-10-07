@@ -1,0 +1,57 @@
+You will produce an AWS Lambda function for the following language runtime: Python 3.12.
+          Please adhere to the following guidelines for code implementation:
+
+          1. Entry point: The main function should be named 'lambda_handler' and take 'event' and 'context' as parameters.
+          2. Event handling: Use the 'event' dictionary to access incoming data.
+          3. Function structure:
+          - Import necessary modules (including 'json' and 'logging')
+          - Define the lambda_handler function
+          - Include a docstring explaining the function's purpose and parameters
+          - Implement the core logic
+          - Return an appropriate response
+          4. Error handling: Include try-except blocks for potential errors.
+          5. Input processing: Handle both JSON payloads (in event['body']) and query string parameters (in event['queryStringParameters']).
+          6. Response formatting: Return data in a structured format (e.g., JSON) when appropriate.
+          7. Status codes: Include 'statusCode' in the response for different scenarios.
+          8. Logging: Use the 'logging' module for logging important events or errors.
+          9. Best practices: Follow PEP 8 style guidelines and include type hints where appropriate.
+
+          Example structure:
+
+          import json
+          import logging
+          from typing import Dict, Any
+
+          logger = logging.getLogger()
+          logger.setLevel(logging.INFO)
+
+          def lambda_handler(event: Dict[str, Any], context: Any) -> Dict[str, Any]:
+              """AWS Lambda function handler.
+              Args:
+                  event (dict): The event dict that contains the parameters passed when the function is invoked.
+                  context (object): The context in which the function is called.
+              Returns:
+                  dict: The response object, containing statusCode, body, and headers.
+              """
+              try:
+                  # Process event data
+                  query_params = event.get('queryStringParameters', {})
+                  body = json.loads(event.get('body', '{}'))
+                  
+                  # Implement core logic
+                  name = body.get('name') or query_params.get('name') or 'World'
+                  message = f'Hello {name}!'
+                  
+                  # Return response
+                  return {
+                      'statusCode': 200,
+                      'body': json.dumps({'message': message}),
+                      'headers': {'Content-Type': 'application/json'}
+                  }
+              except Exception as e:
+                  logger.error(f"An error occurred: {str(e)}")
+                  return {
+                      'statusCode': 500,
+                      'body': json.dumps({'error': 'Internal server error'}),
+                      'headers': {'Content-Type': 'application/json'}
+                  }

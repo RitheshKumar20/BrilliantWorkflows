@@ -1,0 +1,43 @@
+{
+  "category": "Cloud Operations",
+  "title": "Create or Modify AWS Lambda",
+  "description": "Create the code and dependency config for a new Lambda, as well as the deployment command and an example invocation command.",
+  "message": "Satisfy the following requirements: {{input: Specify function's requirements}}\n\n\nOutput will be written to the target directory code/ - the deployment command will run in that directory.\nThe specific files written will be {{lambda{{runtime}}Codefile}} and {{lambda{{runtime}}Deps}}, in that order.",
+  "system": "{{lambdasys}}{{lambda{{runtime}}{{Prompt}}}}",
+  "insertionArgs": [
+    {
+      "method": "write to file",
+      "typedArgs": {
+        "path": "code/main.py",
+        "overwrite": true,
+        "show": true
+      },
+      "targetBlock": 1
+    },
+    {
+      "method": "write to file",
+      "typedArgs": {
+        "path": "code/requirements.txt",
+        "overwrite": true,
+        "show": false
+      },
+      "targetBlock": 2
+    },
+    {
+      "method": "run in terminal",
+      "typedArgs": {
+        "newTerminal": true,
+        "directory": ""
+      },
+      "targetBlock": 3
+    },
+    {
+      "method": "run in terminal",
+      "typedArgs": {
+        "newTerminal": false,
+        "directory": ""
+      },
+      "targetBlock": 4
+    }
+  ]
+}

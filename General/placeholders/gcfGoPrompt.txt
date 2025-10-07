@@ -1,0 +1,75 @@
+You will produce a google cloud function for the following language runtime: Go 1.21. 
+          Please adhere to the following guidelines for code implementation:
+
+          1. Package: Use a package name that describes the function's purpose (e.g., "package sendstytchotp").
+          2. Imports: Include necessary imports, including:
+          - "context"
+          - "encoding/json"
+          - "log"
+          - "github.com/GoogleCloudPlatform/functions-framework-go/functions"
+          - Any other required external packages
+          3. Function registration: Use an init() function to register the HTTP function, and functions.HTTP() to register the main function
+          4. Main function structure:
+          - Define the main function with http.ResponseWriter and *http.Request parameters
+          - Set appropriate response headers (e.g., "Content-Type": "application/json")
+          - Parse and validate the request body
+          - Implement the core logic
+          - Handle errors and send appropriate responses
+          5. Request/Response types: Define structs for request and response bodies with json tags
+          6. Error handling: Create a separate function for handling and writing error responses
+          7. Logging: Use log.Printf() for informational logging
+          8. Best practices: Follow Go naming conventions and style guidelines
+          9. Assume the code will be written to function.go and the dependencies to go.mod.
+
+          Example structure:
+
+          package functionname
+
+          import (
+              "context"
+              "encoding/json"
+              "log"
+              "net/http"
+              "os"
+
+              "github.com/GoogleCloudPlatform/functions-framework-go/functions"
+              // Other necessary imports
+          )
+
+          func init() {
+              functions.HTTP("FunctionName", functionName)
+          }
+
+          type RequestBody struct {
+              // Define request fields
+          }
+
+          type ResponseBody struct {
+              // Define response fields
+          }
+
+          func functionName(w http.ResponseWriter, r *http.Request) {
+              w.Header().Set("Content-Type", "application/json")
+
+              var req RequestBody
+              if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
+                  handleError(w, "Invalid request body", http.StatusBadRequest)
+                  return
+              }
+
+              // Validate request
+
+              // Core logic implementation
+
+              // Send success response
+              response := ResponseBody{
+                  // Set response fields
+              }
+              w.WriteHeader(http.StatusOK)
+              json.NewEncoder(w).Encode(response)
+          }
+
+          func handleError(w http.ResponseWriter, message string, statusCode int) {
+              w.WriteHeader(statusCode)
+              json.NewEncoder(w).Encode(ResponseBody{Message: message})
+          }

@@ -1,0 +1,15 @@
+{
+  "category": "Coding",
+  "title": "Refactor",
+  "description": "Refactor the code as seen fit or in response to a particular request.",
+  "message": "I have the following {{language}} code:\n\n```{{ft}}\n{{selection}}\n```\n\nRefactor the code to improve its modularity and reduce function responsibility. Decompose monoliths into smaller, more manageable components. Combine overly abstracted and fragmented components into larger, more manageable ones. Use your best judgement to determine when a new function is necessary. Apply YAGNI, DRY, separation of concerns, the Liskov Substitution principle, and general best practices for the language and broader technical context. Keep in mind the following specific requests:{{input:Provide specific refactoring instructions or leave blank for general refactoring.}}\n{{language_instructions}}\n\nIMPORTANT: Only return the code inside of a code fence and nothing else. Do not explain your changes.",
+  "insertionArgs": [
+    {
+      "method": "replace selection",
+      "typedArgs": {
+        "selectionBehavior": "Use Original Selection"
+      },
+      "targetBlock": 1
+    }
+  ]
+}

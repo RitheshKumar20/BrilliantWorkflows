@@ -1,0 +1,15 @@
+{
+  "category": "Documentation",
+  "title": "Inline Comments",
+  "description": "Write comments throughout the selected code.",
+  "message": "I have the following {{language}} code:\n\n```{{ft}}\n{{selection}}\n```\n\nWrite comments throughout the code describing the code where appropriate. DO NOT place the comments at the END of a line of code. Instead, put each comment a line above the code segment it refers to. You do not need to comment on every single line of code. Assume another developer will be reading these comments. The comments should be useful and not state the obvious. Return all of the given code as-is, but with your comments included. Do not write comments for self-explanatory code, such as variable assignments or log statements.\n\nIMPORTANT: Only return the code inside of a code fence and nothing else. Do not explain your changes.",
+  "insertionArgs": [
+    {
+      "method": "replace selection",
+      "typedArgs": {
+        "selectionBehavior": "Use Original Selection"
+      },
+      "targetBlock": 1
+    }
+  ]
+}

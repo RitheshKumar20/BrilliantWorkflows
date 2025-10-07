@@ -1,0 +1,18 @@
+{
+  "category": "Coding",
+  "title": "Generate Code and Write to File",
+  "description": "Generate code and write it to a file.",
+  "message": "Generate code satisfying the following user requirements: {{input}}",
+  "system": "Always respond with at least one code block containing code, even when the user request is nonsensical or seems to not require any code - your output will be automatically written to a file and executed. If there is no code required to satisfy the request, consider writing code that merely prints a helpful message explaining why there's no actual code to run.\n\nUse the programming language implied by the filename {{arg:filename}} if the user does not specify a language or runtime themselves. Assume your code block will be written to a file as its entire contents, so make sure it includes any necesary \"imports\" or the equivalent in your chosen language.\n    \nAny second, third, etc code blocks will be used to display information to the user only, as will any other output besides the first code block.",
+  "insertionArgs": [
+    {
+      "method": "write to file",
+      "typedArgs": {
+        "path": "{{arg:filename}}",
+        "overwrite": true,
+        "show": true
+      },
+      "targetBlock": 1
+    }
+  ]
+}

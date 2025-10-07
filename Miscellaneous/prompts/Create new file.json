@@ -1,0 +1,15 @@
+{
+  "category": "Miscellaneous",
+  "title": "Create new file",
+  "description": "Creates a new file, using input as guidance. For example, when prompted: 'A Svelte Button component using TailwindCSS for styling.'",
+  "message": "Your task is to help me create an entirely new file. I will give you a brief description of what I'd like to create, and you will give me a solution that completely implements my request. Do not leave out details and do not leave in any TODO statements. Ensure the entire solution is contained to a single file only. Here's what I want you to create: {{input:What do you want to make?}}\n\nIMPORTANT: Only return the code inside of a code fence and nothing else. Do not explain your changes.",
+  "insertionArgs": [
+    {
+      "method": "insert in new tmp file",
+      "typedArgs": {
+        "selectionBehavior": "Use Original Selection"
+      },
+      "targetBlock": 1
+    }
+  ]
+}

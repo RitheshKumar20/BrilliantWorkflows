@@ -1,0 +1,15 @@
+{
+  "category": "Coding",
+  "title": "Optimize and Simplify",
+  "description": "Replace the selected code with something more efficient.",
+  "message": "I have the following {{language}} code:\n\n```{{ft}}\n{{selection}}\n```\n\nOptimize the code to be more efficient and faster. Remove code that is overly complex or unnecessary. When appropriate, make suggestions for alternative approaches and strategies involving interaction with code outside the provided context, e.g. alternative libraries or a simpler class design. Apply DRY principles by creating new functions, types, classes, etc. when it's likely to reduce code verbosity or complexity.\n{{input:Elaborate on what specifically to optimize, or leave blank to attempt general optimization.}}\n{{language_instructions}}\n\nIMPORTANT: Only return the code inside of a code fence and nothing else. Do not explain your changes.",
+  "insertionArgs": [
+    {
+      "method": "replace selection",
+      "typedArgs": {
+        "selectionBehavior": "Use Original Selection"
+      },
+      "targetBlock": 1
+    }
+  ]
+}

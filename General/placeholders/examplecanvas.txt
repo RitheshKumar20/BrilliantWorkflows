@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spinning Yin-Yang Particle Animation</title>
+    <style>
+        /* Basic CSS reset and styling for the body */
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #000;
+            font-family: 'Inter', sans-serif;
+        }
+        /* Styling for the canvas to make it fill the screen */
+        canvas {
+            display: block;
+        }
+        /* Info text styling */
+        .info {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: #fff;
+            background-color: rgba(0,0,0,0.5);
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <canvas id="particleCanvas"></canvas>
+    <script>
+        // --- Canvas and Context Setup ---
+        const canvas = document.getElementById('particleCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        // --- Global Animation Variables ---
+        let particles = [];
+        let angle = 0; // The current rotation angle of the symbol
+
+        // --- Particle Class ---
+        // Represents a single particle in the animation
+        class Particle {
+            constructor(x, y, color) {
+                // The target position where the particle should be
+                this.targetX = x;
+                this.targetY = y;
+                // The current position, starts randomly
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.color = color;
+                this.size = 2;
+                // Easing factor for smooth movement towards the target
+                this.ease = 0.05;
+            }
+
+            // Update the particle's position
+            update() {
+                // Move the particle towards its target position smoothly
+                this.x += (this.targetX - this.x) * this.ease;
+                this.y += (this.targetY - this.y) * this.ease;
+            }
+
+            // Draw the particle on the canvas
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        // --- Initialization Function ---
+        // Creates the particles and sets their initial target positions
+        function init() {
+            particles = [];
+            const centerX = width / 2;
+            const centerY = height / 2;
+            const radius = Math.min(width, height) * 0.35;
+            const numParticles = 2000; // Total number of particles
+
+            // Generate particles for the Yin-Yang symbol
+            for (let i = 0; i < numParticles; i++) {
+                const a = Math.random() * Math.PI * 2; // Random angle
+                const r = Math.random() * radius;     // Random radius
+
+                const x = r * Math.cos(a);
+                const y = r * Math.sin(a);
+
+                let color = 'white';
+
+                // Determine color based on position (Yin-Yang logic)
+                const smallCircleRadius = radius / 2;
+                const distTop = Math.sqrt(x * x + (y + smallCircleRadius) * (y + smallCircleRadius));
+                const distBottom = Math.sqrt(x * x + (y - smallCircleRadius) * (y - smallCircleRadius));
+
+                if (x > 0) { // Right side (Yang - white)
+                    if (distBottom < smallCircleRadius) {
+                        color = 'black'; // Black circle in white area
+                    } else {
+                        color = 'white';
+                    }
+                } else { // Left side (Yin - black)
+                    if (distTop < smallCircleRadius) {
+                        color = 'white'; // White circle in black area
+                    } else {
+                        color = 'black';
+                    }
+                }
+                
+                // Add the two small dots
+                const dotRadius = radius * 0.15;
+                 if (distTop < dotRadius) {
+                    color = 'black';
+                }
+                if (distBottom < dotRadius) {
+                    color = 'white';
+                }
+
+
+                particles.push(new Particle(centerX + x, centerY + y, color));
+            }
+        }
+
+        // --- Animation Loop ---
+        function animate() {
+            // Clear the canvas with a semi-transparent black for a trailing effect
+            ctx.fillStyle = 'rgba(80, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, width, height);
+
+            // Save the current canvas state
+            ctx.save();
+
+            // Move the origin to the center of the canvas
+            ctx.translate(width / 2, height / 2);
+            // Rotate the canvas
+            ctx.rotate(angle);
+            // Move the origin back
+            ctx.translate(-width / 2, -height / 2);
+
+            // Update and draw each particle
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            // Restore the canvas state to prevent rotation from accumulating
+            ctx.restore();
+
+            // Increment the angle for the next frame to create spinning motion
+            angle -= 0.02;
+
+            // Request the next frame
+            requestAnimationFrame(animate);
+        }
+
+        // --- Event Listeners ---
+        // Handle window resizing
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+            // Re-initialize the particles for the new size
+            init();
+        });
+
+        // --- Start the animation ---
+        init();
+        animate();
+    </script>
+</body>
+</html>

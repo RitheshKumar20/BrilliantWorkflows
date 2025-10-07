@@ -1,0 +1,15 @@
+{
+  "category": "Coding",
+  "title": "Make Change",
+  "description": "Modify (replace) existing code according to your instructions.",
+  "message": "I have the following {{language}} code:\n\n```{{ft}}\n{{selection}}\n```\n\nYou are tasked with making the following modification: {{input:What modification do you want to make?}}\n\nDo not make any other changes to the code.\n\n{{language_instructions}}\n\nIMPORTANT: Only return the code inside of a code fence and nothing else. Do not explain your changes.",
+  "insertionArgs": [
+    {
+      "method": "replace selection",
+      "typedArgs": {
+        "selectionBehavior": "Use Original Selection"
+      },
+      "targetBlock": 1
+    }
+  ]
+}

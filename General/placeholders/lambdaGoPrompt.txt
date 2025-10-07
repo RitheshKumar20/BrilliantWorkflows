@@ -1,0 +1,56 @@
+You will produce an AWS Lambda function for the following language runtime: Go 1.21 (latest version).
+          Please adhere to the following guidelines for code implementation:
+
+          1. Package: Use the "main" package as required by AWS Lambda.
+          2. Imports: Include necessary imports, such as:
+              - "context"
+              - "encoding/json"
+              - "log"
+              - "github.com/aws/aws-lambda-go/lambda"
+              - Any other required external packages
+          3. Function structure:
+              - Define the main function to start the Lambda
+              - Define a handler function that takes context.Context and a custom event struct as parameters
+              - Implement the core logic in the handler function
+              - Return a response struct and an error
+          4. Types:
+              - Define custom types for the Lambda event (input) and response (output)
+              - Use json tags for proper marshaling/unmarshaling
+          5. Error handling: Return errors when appropriate in the handler function
+          6. Logging: Use log.Printf() for informational logging
+          7. Best practices: Follow Go naming conventions and style guidelines
+
+          Example structure:
+
+          package main
+
+          import (
+              "context"
+              "encoding/json"
+              "log"
+
+              "github.com/aws/aws-lambda-go/lambda"
+          )
+
+          type MyEvent struct {
+              Name string `json:"name"`
+          }
+
+          type MyResponse struct {
+              Message string `json:"message"`
+          }
+
+          func HandleRequest(ctx context.Context, event MyEvent) (MyResponse, error) {
+              // Log the request
+              log.Printf("Received event: %+v", event)
+
+              // Implement core logic
+              message := "Hello, " + event.Name
+
+              // Return the response
+              return MyResponse{Message: message}, nil
+          }
+
+          func main() {
+              lambda.Start(HandleRequest)
+          }

@@ -1,0 +1,25 @@
+You will create an AWS Lambda Function based on given requirements. Your response should include three separate, labelled code blocks:
+          Code Block 1: The function code.
+          Code Block 2: Necessary dependency configurations.
+          Code Block 3: Invocation command to test the function via an execution proxy using curl.
+        
+        Guidelines:
+        - Use comments for explanations; avoid prose descriptions.
+        - Generate code for the specified runtime.
+        - Structure code for improved debuggability and testability.
+        - Handle potential edge cases and prevent unrecoverable failures.
+        - Include distinct error messages for different error paths.
+        - Do not attempt to write anything other than the two requested files (one code and one dependency list).
+
+        Testing:
+        - The function you provide will be automatically deployed to AWS.
+        - The user who receives this command will not have AWS CLI access to the function but can use it through an authorized proxy service.
+        - The proxy is another Lambda function with a public URL that accepts a target function and authorization token in a query string as follows: 
+          {{proxyExecURL}}?accretionalFunction=$FUNCTION_NAME&accretionalToken={{!accretionalToken}}
+        - The $FUNCTION_NAME environment variable will be already set in the user's environment, use it in the commands but do not attempt to set it.
+        - The accretionalToken is a special placeholder will be replaced at runtime, so maintain the exact format.
+        - If the Lambda function requires additional input parameters, include them in the query string (which will be passed through to the deployed function)
+        - Input params can use default values or the special placeholder {{!input:"input hint text"}} which will prompt the user like &date={{!input:Enter date in YYYYMMDD format}}.
+        - If Lambda runtime environment variables are needed, include an AWS cli command to set them.
+        - Test the function with a basic validation of the "happy path" to confirm the deployment, nothing else is needed.
+        

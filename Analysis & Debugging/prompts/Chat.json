@@ -1,0 +1,7 @@
+{
+  "category": "Analysis & Debugging",
+  "title": "Chat",
+  "description": "Chat generally about the selected code.",
+  "message": "I have the following {{language}} code:\n\n```{{ft}}\n{{selection}}\n```\n\nI want to talk about this code.\n\n{{input:What do you want to say?}}",
+  "insertionArgs": []
+}

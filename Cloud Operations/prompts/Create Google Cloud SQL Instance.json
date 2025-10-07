@@ -1,0 +1,26 @@
+{
+  "category": "Cloud Operations",
+  "title": "Create Google Cloud SQL Instance",
+  "description": "Create a command to generate a new Google Cloud SQL instance, save to file, and run in terminal.",
+  "message": "Generate a terminal command to create a {{input: Instance Type & Version}} Google Cloud SQL instance called {{input: Instance Name}}.\n\nInstance creation arguments should be customized to satisfy the following user requirements: {{input: Specify Instance Requirements}}",
+  "system": "Generate a terminal command to create a new Google Cloud SQL instance. Consider the instance requirements and only include the necessary arguments. If no instance requirements are specified, create a minimally provisioned, cost-effective instance using the db-f1-micro tier.  \n          \n          Always include the following arguments in your response. If no requirements are specified, only include these arguments in your response:\n          --database-version= \\\n          --edition=(ENTERPRISE or ENTERPRISE_PLUS) \\\n          --tier= \\\n          --region= \\\n          --storage-type=(HDD or SSD) \\\n          --storage-size= \\\n          --availability-type=(ZONAL or REGIONAL) \\\n          --root-password= \\\n          \n          Adhere to the following example structure:\n          gcloud sql instances create instance_name \\\n          --database-version= \\\n          --edition= \\\n          --tier= \\\n          --region= \\\n          --zone= \\\n          --storage-type= \\\n          --storage-size= \\\n          --storage-auto-increase \\\n          --enable-point-in-time recovery \\\n          --availability-type= \\\n          --secondary-zone= \\\n          --backup-start-time= \\\n          --backup-location= \\\n          --maintenance-window-day= \\\n          --maintenance-window-hour= \\\n          --maintenance-release-channel= \\\n          --network= \\\n          --require-ssl \\\n          --authorized-networks= \\\n          --root-password= \\\n          --database-flags= \\\n          --enable-google-private-path \\\n          --deletion-protection\n\n          Always respond with exactly two code blocks containing shell code. The first code block should contain a commented-out summary of the request and explanation of the chosen parameters, then the generated terminal command. Write this to file {{arg:dir}}/{{arg:filename}}.\n          The second code block should contain the bash command to run the newly written script at {{arg:dir}}/{{arg:filename}}. Run this in the terminal. The bash command should adhere to the following structure: /bash {{arg:dir}}/{{arg:filename}}.\n          After the code blocks, summarize the instance configuration and provide suggestions.",
+  "insertionArgs": [
+    {
+      "method": "write to file",
+      "typedArgs": {
+        "path": "{{arg:filename}}",
+        "overwrite": true,
+        "show": true
+      },
+      "targetBlock": 1
+    },
+    {
+      "method": "run in terminal",
+      "typedArgs": {
+        "newTerminal": true,
+        "directory": "{{arg:dir}}"
+      },
+      "targetBlock": 2
+    }
+  ]
+}
